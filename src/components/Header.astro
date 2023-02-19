@@ -1,6 +1,22 @@
 ---
 import { Image } from '@astrojs/image/components'
 import logo from '@assets/img/logo.png'
+import { Icon } from 'astro-icon'
 ---
 
-<Image aspectRatio={1} format={'webp'} width={150} height={60} alt='dTek Logo' src={logo} />
+<header class='flex align-center justify-between p-2'>
+	<div class='logo-wrapper'>
+		<a href='/'><Image aspectRatio={1} format={'webp'} width={150} height={60} alt='dTek Logo' src={logo} /></a>
+	</div>
+	<div class='search-wrapper'>
+		<input type='search' title='search' name='search' placeholder='Αναζήτηση' />
+		<Icon name='ic:sharp-search' />
+	</div>
+</header>
+
+<style lang='css'>
+	[astro-icon='ic:sharp-search'] {
+		width: 26px;
+		height: auto;
+	}
+</style>

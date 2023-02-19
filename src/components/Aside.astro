@@ -1,0 +1,39 @@
+---
+import { Icon } from 'astro-icon'
+---
+
+<aside class='navigation-aside fixed px-2'>
+	<nav class='navigation-wrapper'>
+		<ul class='navigation-list'>
+			<li class='nav--title flex align-center pointer'>
+				<span>Start Here</span>
+				<Icon name='ph:caret-down-bold' />
+			</li>
+			<li>Getting Started</li>
+			<li>Installation</li>
+			<li>Editor Setup</li>
+		</ul>
+	</nav>
+</aside>
+
+<style>
+	.navigation-aside {
+		width: var(--theme-sidebar-width);
+	}
+
+	.navigation-wrapper {
+		max-height: calc(100vh - 200px);
+		overflow-x: visible;
+		overflow-y: auto;
+		line-height: 1.5;
+	}
+
+	.nav--title span {
+		margin-right: 0.5rem;
+	}
+
+	.nav--title [astro-icon='ph:caret-down-bold'] {
+		width: 20px;
+		height: auto;
+	}
+</style>
