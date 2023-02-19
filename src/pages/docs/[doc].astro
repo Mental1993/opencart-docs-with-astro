@@ -1,0 +1,47 @@
+---
+import { contentfulClient } from '../../lib/contentful'
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer'
+import type { Document } from '@contentful/rich-text-types'
+import { Markdown } from '@astropub/md'
+import Layout from '../../layouts/Layout.astro'
+
+
+interface docPost {
+	title: string
+	slug: string
+	content: Document
+	category: Object
+}
+
+const entries = await contentfulClient.getEntries<docPost>({
+	content_type: 'docPost',
+})
+
+
+
+export async function getStaticPaths() {
+	const entries = await contentfulClient.getEntries<docPost>({
+		content_type: 'docPost',
+	})
+	return [
+		...entries.items.map((item) => {
+			return {
+				params: { doc: item.fields.slug },
+				props: { title: item.fields.title, slug: item.fields.slug, content: item.fields.content },
+			}
+		}),
+	]
+}
+
+const { doc } = Astro.params
+const { title, slug, content } = Astro.props
+---
+
+
+<Layout title={title}>
+<h1>hello {title}</h1>
+<p>My slug is {slug}</p>
+<h1>--- Content -----</h1>
+<Markdown.Inline of={content} />
+</Layout>
+<!-- <article set:html={documentToHtmlString(content)} /> -->
