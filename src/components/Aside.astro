@@ -1,39 +1,114 @@
 ---
-import { Icon } from 'astro-icon'
+import { contentfulClient } from '../lib/contentful'
+
+interface docPost {
+	title: string
+	slug: string
+	content: Document
+	category: Object
+}
+
+const entries = await contentfulClient.getEntries<docPost>({
+	content_type: 'docPost',
+})
+
+let data = []
+
+entries.items.map((item) => {
+	data.push({
+		category: {
+			title: item.fields.category.fields.title,
+			slug: item.fields.category.fields.slug,
+		},
+		data: {
+			title: item.fields.title,
+			slug: item.fields.slug,
+		},
+	})
+})
+
+const productPosts = data.filter((post) => post.category.slug === 'products')
+const categoryPosts = data.filter((post) => post.category.slug === 'category')
 ---
 
 <aside class='navigation-aside fixed px-2'>
 	<nav class='navigation-wrapper'>
 		<ul class='navigation-list'>
-			<li class='nav--title flex align-center pointer'>
-				<span>Start Here</span>
-				<Icon name='ph:caret-down-bold' />
+			<!-- Products -->
+			<li class='nav-group'>
+				<details open>
+					<summary class='pointer'>Προϊόντα</summary>
+					<ul>
+						{
+							productPosts.map((post) => (
+								<li class='flex'>
+									<a href={`/docs/${post.data.slug}`}>{post.data.title}</a>
+								</li>
+							))
+						}
+					</ul>
+				</details>
 			</li>
-			<li>Getting Started</li>
-			<li>Installation</li>
-			<li>Editor Setup</li>
+
+			<!-- Categories -->
+			<li class='nav-group'>
+				<details open>
+					<summary class='pointer'>Κατηγορίες</summary>
+					<ul>
+						{
+							categoryPosts.map((post) => (
+								<li class='flex'>
+									<a href={`/docs/${post.data.slug}`}>{post.data.title}</a>
+								</li>
+							))
+						}
+					</ul>
+				</details>
+			</li>
 		</ul>
 	</nav>
+
+	<style>
+		.navigation-aside {
+			width: var(--theme-sidebar-width);
+		}
+
+		.navigation-wrapper {
+			max-height: calc(100vh - 200px);
+			overflow-x: visible;
+			overflow-y: auto;
+			line-height: 1.5;
+		}
+
+		.nav--title span {
+			margin-right: 0.5rem;
+		}
+
+		.nav--title [astro-icon='ph:caret-down-bold'] {
+			width: 20px;
+			height: auto;
+		}
+
+		.navigation-list > li:not(:last-child) {
+			margin-bottom: 1.75rem;
+		}
+
+		.navigation-list details summary {
+			font-weight: 600;
+			margin-bottom: 5px;
+		}
+
+		.navigation-list details a {
+			padding: 0.2rem 1rem;
+			color: #aba8bd;
+			text-decoration: none;
+			font-size: 0.875rem;
+			font-weight: 300;
+			width: 100%;
+		}
+
+		.navigation-list details a:hover {
+			background-color: #2c2c2c;
+		}
+	</style>
 </aside>
-
-<style>
-	.navigation-aside {
-		width: var(--theme-sidebar-width);
-	}
-
-	.navigation-wrapper {
-		max-height: calc(100vh - 200px);
-		overflow-x: visible;
-		overflow-y: auto;
-		line-height: 1.5;
-	}
-
-	.nav--title span {
-		margin-right: 0.5rem;
-	}
-
-	.nav--title [astro-icon='ph:caret-down-bold'] {
-		width: 20px;
-		height: auto;
-	}
-</style>
