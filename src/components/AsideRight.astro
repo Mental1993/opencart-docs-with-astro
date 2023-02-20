@@ -1,10 +1,31 @@
+---
+import { Icon } from 'astro-icon'
+---
+
 <aside class='px-2 fixed'>
-	<p>Σε αυτή την σελίδα</p>
+	<p class='title'>Σε αυτή την σελίδα</p>
 	<ul>
-		<li>Κεφαλίδα 1</li>
-		<li>Κεφαλίδα 2</li>
-		<li>Κεφαλίδα 3</li>
-		<li>Κεφαλίδα 4</li>
+		<li><a href='#'>Κεφαλίδα 1</a></li>
+		<li><a href='#'>Κεφαλίδα 2</a></li>
+		<li><a href='#'>Κεφαλίδα 3</a></li>
+		<li><a href='#'>Κεφαλίδα 4</a></li>
+		<li><a href='#'>Κεφαλίδα 5</a></li>
+	</ul>
+
+	<p class='title'>Χρεάζεσαι e-shop?</p>
+	<ul>
+		<li><a href='https://dtek.gr' target='_blank'>Δημιούργησέ e-shop</a></li>
+		<li><a href='#'>Hosting Plans</a></li>
+		<li><a href='#'>Mobile Applications</a></li>
+		<li><a href='#'>Ψηφιακά εργαλεία για δήμους</a></li>
+		<li><a href='#'>XML metaverse</a></li>
+	</ul>
+
+	<p class='title'>Follow us</p>
+	<ul>
+		<li><a href='#'><Icon name='ant-design:facebook-outlined' /></a></li>
+		<li><a href='#'><Icon name='ant-design:instagram-outlined' /></a></li>
+		<li><a href='#'><Icon name='ant-design:twitter-outlined' /></a></li>
 	</ul>
 </aside>
 
@@ -13,5 +34,54 @@
 		width: var(--theme-sidebar-width);
 		top: 128px;
 		inset-inline-end: 0;
+	}
+
+	.title {
+		font-weight: 600;
+		margin-bottom: 5px;
+	}
+
+	ul li {
+		position: relative;
+		padding: 0.1rem 0rem;
+	}
+
+	ul li a {
+		padding-top: 0.275rem;
+		padding-bottom: 0.275rem;
+		color: var(--theme-text-light);
+		text-decoration: none;
+		gap: 0.5rem;
+		line-height: 1.3;
+		width: 100%;
+		font-size: 0.875rem;
+	}
+
+	ul li:hover a {
+		color: var(--theme-text);
+		text-decoration: underline;
+	}
+
+	ul li::before {
+		content: '';
+		display: block;
+		position: absolute;
+		left: -20px;
+		width: 3px;
+		background-color: #666;
+		height: 100%;
+	}
+
+	ul li:hover::before {
+		background-color: var(--theme-primary-color);
+	}
+
+	[astro-icon] {
+		width: 24px;
+		height: auto;
+	}
+
+	aside > ul:not(:last-child) {
+		margin-bottom: 1.5rem;
 	}
 </style>
